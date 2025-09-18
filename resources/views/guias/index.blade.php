@@ -1,61 +1,80 @@
 <x-sidebar>
-    <div class="max-w-6xl mx-auto p-6 bg-[#161b22] shadow-xl rounded-lg mt-6 border border-gray-700">
-        <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
-            <h1 class="text-3xl font-bold text-gray-100 flex items-center">
-                <svg class="w-8 h-8 mr-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                Guías
-            </h1>
-            <a href="{{ route('guias.create') }}" class="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition-colors duration-200">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                Nueva Guía
-            </a>
-        </div>
+    <div class="container my-5">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-body p-4 p-md-5">
 
-        @if(session('success'))
-            <div class="mb-4 p-4 bg-red-900/40 text-red-300 border border-red-800 rounded-lg">
-                {{ session('success') }}
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                    <h1 class="h3 fw-bold text-dark d-flex align-items-center">
+                        <i class="bi bi-people-fill fs-4 me-3 text-danger"></i>
+                        Guías
+                    </h1>
+                    <a href="{{ route('guias.create') }}" 
+                       class="btn btn-danger shadow-sm d-flex align-items-center">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Nueva Guía
+                    </a>
+                </div>
+
+                {{-- Mensaje de éxito --}}
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <div>{{ session('success') }}</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <div class="table-responsive rounded-3 shadow-sm">
+                    <table class="table table-hover table-striped align-middle text-start mb-0">
+                        <thead class="table-dark text-uppercase small">
+                            <tr>
+                                <th scope="col" class="px-3 py-2"><i class="bi bi-person-vcard me-1"></i> Nombre</th>
+                                <th scope="col" class="px-3 py-2"><i class="bi bi-phone me-1"></i> Teléfono</th>
+                                <th scope="col" class="px-3 py-2"><i class="bi bi-house me-1"></i> Comunidad Asignada</th>
+                                <th scope="col" class="px-3 py-2 text-center"><i class="bi bi-tools me-1"></i> Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($guias as $guia)
+                            <tr class="hover-bg-light">
+                                <td class="px-3 py-3 fw-bold">{{ $guia->nombre }}</td>
+                                <td class="px-3 py-3 text-muted">{{ $guia->telefono }}</td>
+                                <td class="px-3 py-3">
+                                    <span class="badge bg-primary">{{ $guia->comunidad->nombre }}</span>
+                                </td>
+                                
+                                <td class="px-3 py-3 text-center">
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ route('guias.edit', $guia) }}" 
+                                           class="btn btn-sm btn-warning text-dark" 
+                                           data-bs-toggle="tooltip" title="Editar Guía">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form action="{{ route('guias.destroy', $guia) }}" method="POST" 
+                                              onsubmit="return confirm('¿Estás seguro de que deseas eliminar al guía {{ $guia->nombre }}?');" 
+                                              class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Eliminar Guía">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">
+                                    <i class="bi bi-exclamation-octagon d-block mb-2 fs-4"></i>
+                                    No hay guías registradas en el sistema.
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
-        @endif
-
-        <div class="overflow-x-auto rounded-lg shadow-lg">
-            <table class="w-full text-left text-gray-300">
-                <thead class="bg-[#21262d] text-gray-400 border-b border-gray-700">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 font-medium">Nombre</th>
-                        <th scope="col" class="px-6 py-3 font-medium">Teléfono</th>
-                        <th scope="col" class="px-6 py-3 font-medium">Comunidad</th>
-                        <th scope="col" class="px-6 py-3 font-medium text-center">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-[#161b22] divide-y divide-gray-700">
-                    @forelse ($guias as $guia)
-                    <tr class="hover:bg-gray-800 transition-colors duration-150">
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $guia->nombre }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $guia->telefono }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $guia->comunidad->nombre }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap flex justify-center items-center gap-2">
-                        
-                            <a href="{{ route('guias.edit', $guia) }}" class="inline-flex items-center px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors duration-200">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                Editar
-                            </a>
-                            <form action="{{ route('guias.destroy', $guia) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar a esta guía?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="inline-flex items-center px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.36 21H7.64a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                    Eliminar
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">No hay guías registradas.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
         </div>
     </div>
 </x-sidebar>

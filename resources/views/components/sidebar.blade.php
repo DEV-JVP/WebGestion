@@ -374,6 +374,12 @@
                         <span class="nav-text">Asistencias</span>
                     </a>
                 </div>
+                 <div class="nav-item">
+                    <a href="/guias" class="nav-link" onclick="setActive(this)">
+                        <span class="nav-icon"><i class="fas fa-users"></i></span>
+                        <span class="nav-text">Guias</span>
+                    </a>
+                </div>
             </div>
 
             <div class="nav-section">
