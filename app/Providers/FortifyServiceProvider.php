@@ -13,9 +13,6 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\redirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -27,8 +24,9 @@ class FortifyServiceProvider extends ServiceProvider
         //
     }
 
-
-
+    /**
+     * Bootstrap any application services.
+     */
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
@@ -38,23 +36,13 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::redirectUserForTwoFactorAuthenticationUsing(redirectIfTwoFactorAuthenticatable::class);
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+
             return Limit::perMinute(5)->by($throttleKey);
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        });
-
-        // 👇 Aquí va la autenticación manual
-        Fortify::authenticateUsing(function (Request $request) {
-            $user = DB::table('users') // ✅ en lugar de DB::connection('database')
-                ->where('email', $request->email)
-                ->first();
-
-            if ($user && Hash::check($request->password, $user->password)) {
-                return User::find($user->id);
-            }
         });
     }
 }
