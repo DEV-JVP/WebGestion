@@ -413,12 +413,16 @@
                         <span class="nav-text">Perfil</span>
                     </a>
                 </div>
-                <div class="nav-item">
-                    <a href="#" class="nav-link" onclick="setActive(this)">
-                        <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
-                        <span class="nav-text">Cerrar Sesión</span>
-                    </a>
-                </div>
+               <div class="nav-item">
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="nav-link flex items-center w-full text-left">
+            <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
+            <span class="nav-text">Cerrar Sesión</span>
+        </button>
+    </form>
+</div>
+
             </div>
         </nav>
     </div>
