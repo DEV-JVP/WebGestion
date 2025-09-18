@@ -16,7 +16,7 @@ LOG_DEPRECATIONS_CHANNEL="null"
 LOG_LEVEL="debug"
 
 DB_CONNECTION="mysql"
-DB_HOST="metro.proxy.rlwy.net"
+DB_HOST="hopper.proxy.rlwy.net"
 DB_PORT="46168"
 DB_DATABASE="railway"
 DB_USERNAME="root"
