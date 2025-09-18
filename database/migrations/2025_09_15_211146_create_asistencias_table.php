@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\redprint;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asistencias', function (redprint $table) {
+        Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('confirmando_id')->constrained()->cascadeOnDelete();
             $table->foreignId('jornada_id')->constrained()->cascadeOnDelete();
