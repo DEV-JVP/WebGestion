@@ -8,9 +8,9 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-      <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  
+
 
   <!-- Bootstrap CSS -->
   <link
@@ -22,7 +22,7 @@
     href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
     rel="stylesheet" />
 
-  <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+<link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -121,7 +121,8 @@
 
     <!-- Bootstrap JS (necesario para collapse) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+   <script src="{{ asset('js/sidebar.js') }}" defer></script>
+
 </body>
 
 </html>
