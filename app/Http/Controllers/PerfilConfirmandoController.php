@@ -33,6 +33,7 @@ class PerfilConfirmandoController extends Controller
 public function welcome(Request $request)
 {
     $confirmando = null;
+    // Documento por defecto si no hay registro
     $documentos = new \App\Models\Documento([
         'dni_confirmando' => false,
         'partida_bautizo' => false,
@@ -54,13 +55,15 @@ public function welcome(Request $request)
             return redirect()->route('welcome')->withErrors(['dni' => 'no actualizado']);
         }
 
-        if ($confirmando->documentos) {
-            $documentos = $confirmando->documentos;
+        // Si hay documentos asociados, toma el primero
+        if ($confirmando->documentos && $confirmando->documentos->count() > 0) {
+            $documentos = $confirmando->documentos->first();
         }
     }
 
     return view('welcome', compact('confirmando', 'documentos'));
 }
+
 
     public function buscar(Request $request)
     {
