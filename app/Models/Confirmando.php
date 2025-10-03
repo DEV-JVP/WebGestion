@@ -46,6 +46,6 @@ class Confirmando extends Model
 
     public function documentos()
     {
-        return $this->hasOne(Documento::class);
+        return $this->hasMany(Documento::class);
     }
 }
