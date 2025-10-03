@@ -46,19 +46,23 @@ public function edit(Confirmando $confirmando)
 
 
     // Actualizar un documento específico
-    public function update(Request $request, Confirmando $confirmando, Documento $documento)
-    {
-        $documento->dni_confirmando = $request->has('dni_confirmando');
-        $documento->partida_bautizo = $request->has('partida_bautizo');
-        $documento->dni_padrino = $request->has('dni_padrino');
-        $documento->constancia_confirmacion = $request->has('constancia_confirmacion');
-        $documento->partida_matrimonio_religioso = $request->has('partida_matrimonio_religioso');
+   public function update(Request $request, Confirmando $confirmando)
+{
+    $confirmando->documentos()->updateOrCreate(
+        ['confirmando_id' => $confirmando->id],
+        [
+            'dni_confirmando' => $request->has('dni_confirmando'),
+            'partida_bautizo' => $request->has('partida_bautizo'),
+            'dni_padrino' => $request->has('dni_padrino'),
+            'constancia_confirmacion' => $request->has('constancia_confirmacion'),
+            'partida_matrimonio_religioso' => $request->has('partida_matrimonio_religioso'),
+        ]
+    );
 
-        $documento->save();
+    return redirect()->route('confirmandos.index')
+        ->with('success', 'Documento actualizado correctamente.');
+}
 
-        return redirect()->route('confirmandos.index', [$confirmando->id, $documento->id])
-            ->with('success', 'Documento actualizado correctamente.');
-    }
 
     public function editGene(Confirmando $confirmando)
 {
