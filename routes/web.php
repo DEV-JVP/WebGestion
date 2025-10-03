@@ -68,7 +68,7 @@ Route::middleware([
 
 Route::get('confirmandos/{confirmando}/documentos/{documento}/edit', [DocumentoController::class, 'edit'])
     ->name('confirmandos.documentos.edit');
-Route::put('confirmandos/{confirmando}/documentos/{documento}', [DocumentoController::class, 'update'])
+Route::put('confirmandos/{confirmando}/documentos', [DocumentoController::class, 'update'])
     ->name('confirmandos.documentos.update');
 
 
