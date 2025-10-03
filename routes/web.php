@@ -64,7 +64,12 @@ Route::middleware([
     Route::get('/documentos/export/csv', [DocumentoController::class, 'export'])
      ->name('documentos.export.csv');
 
- Route::resource('documentos', DocumentoController::class);
-Route::get('confirmandos/{confirmando}/documentos/edit', [DocumentoController::class, 'edit'])->name('documentos.edit');
-Route::put('confirmandos/{confirmando}/documentos', [DocumentoController::class, 'update'])->name('documentos.update');
+  Route::resource('documentos', DocumentoController::class);
+
+Route::get('confirmandos/{confirmando}/documentos/{documento}/edit', [DocumentoController::class, 'edit'])
+    ->name('confirmandos.documentos.edit');
+Route::put('confirmandos/{confirmando}/documentos/{documento}', [DocumentoController::class, 'update'])
+    ->name('confirmandos.documentos.update');
+
+
 });

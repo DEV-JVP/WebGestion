@@ -62,7 +62,7 @@
                             <th class="px-6 py-3">DNI Padrino</th>
                             <th class="px-6 py-3">Constancia Confirmación</th>
                             <th class="px-6 py-3">Partida Matrimonio Religioso</th>
-                            <th class="px-6 py-3 text-center">Acciones</th>
+                           
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -106,12 +106,7 @@
                                 ? '<span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">Entregado</span>'
                                 : '<span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700">Falta</span>' !!}
                             </td>
-                            <td class="px-6 py-4 text-center">
-                                <a href="{{ route('documentos.edit', $doc->confirmando) }}"
-                                    class="inline-flex items-center px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-xs font-medium rounded-lg shadow">
-                                    <i class="bi bi-pencil-square mr-1"></i> Editar
-                                </a>
-                            </td>
+                         
                         </tr>
                         @empty
                         <tr>

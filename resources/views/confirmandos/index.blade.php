@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body >
+<body>
 
     <x-sidebar>
         <div class="container mx-auto py-8 px-4">
@@ -21,17 +21,17 @@
                     Listado de Confirmandos
                 </h1>
                 <a href="{{ route('confirmandos.create') }}"
-                   class="inline-flex items-center px-5 py-2 bg-green-600 text-white font-semibold rounded-xl shadow hover:bg-green-700 transition">
+                    class="inline-flex items-center px-5 py-2 bg-green-600 text-white font-semibold rounded-xl shadow hover:bg-green-700 transition">
                     <i class="bi bi-plus-circle me-2"></i> Nuevo Confirmando
                 </a>
             </div>
 
             <!-- Mensaje de éxito -->
             @if (session('success'))
-                <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded-lg flex items-center gap-2">
-                    <i class="bi bi-check-circle-fill text-green-600"></i>
-                    <span>{{ session('success') }}</span>
-                </div>
+            <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded-lg flex items-center gap-2">
+                <i class="bi bi-check-circle-fill text-green-600"></i>
+                <span>{{ session('success') }}</span>
+            </div>
             @endif
 
             <!-- Tabla -->
@@ -57,52 +57,65 @@
 
                             <td class="px-6 py-3 text-center">
                                 @php
-                                    $pagoCount = $confirmando->pagos->count();
-                                    $badgeClass = $pagoCount > 0 
-                                        ? 'bg-green-100 text-green-800 border border-green-300' 
-                                        : 'bg-yellow-100 text-yellow-800 border border-yellow-300';
-                                    $icon = $pagoCount > 0 ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
-                                    $text = $pagoCount > 0 ? 'Pagos (' . $pagoCount . ')' : 'Pendiente';
+                                $pagoCount = $confirmando->pagos->count();
+                                $badgeClass = $pagoCount > 0
+                                ? 'bg-green-100 text-green-800 border border-green-300'
+                                : 'bg-yellow-100 text-yellow-800 border border-yellow-300';
+                                $icon = $pagoCount > 0 ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+                                $text = $pagoCount > 0 ? 'Pagos (' . $pagoCount . ')' : 'Pendiente';
                                 @endphp
                                 <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold {{ $badgeClass }}">
                                     <i class="bi {{ $icon }}"></i> {{ $text }}
                                 </span>
                             </td>
 
-                            <td class="px-6 py-3 text-center">
-                                <div class="flex gap-2 justify-center">
-                                    <a href="{{ route('confirmandos.show', $confirmando) }}"
-                                       class="px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition text-xs"
-                                       title="Ver Detalles">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="{{ route('confirmandos.edit', $confirmando) }}"
-                                       class="px-3 py-1 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-500 transition text-xs"
-                                       title="Editar Registro">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <a href="{{ route('pagos.index', $confirmando) }}"
-                                       class="px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition text-xs"
-                                       title="Gestionar Pagos">
-                                        <i class="bi bi-currency-dollar"></i>
-                                    </a>
-                                    <a href="{{ route('documentos.edit', $confirmando) }}"
-                                       class="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition text-xs"
-                                       title="Gestionar Documentos">
-                                        <i class="bi bi-folder-check"></i>
-                                    </a>
-                                    <form action="{{ route('confirmandos.destroy', $confirmando) }}" method="POST"
-                                          onsubmit="return confirm('¿Seguro que deseas eliminar a {{ $confirmando->nombre }}? Esta acción es irreversible.');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition text-xs"
-                                                title="Eliminar">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
+                         <td class="px-6 py-3 text-center">
+    <div class="flex gap-2 justify-center">
+        <a href="{{ route('confirmandos.show', $confirmando) }}"
+           class="px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition text-xs"
+           title="Ver Detalles">
+            <i class="bi bi-eye"></i>
+        </a>
+
+        <a href="{{ route('confirmandos.edit', $confirmando) }}"
+           class="px-3 py-1 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-500 transition text-xs"
+           title="Editar Registro">
+            <i class="bi bi-pencil"></i>
+        </a>
+
+        <a href="{{ route('pagos.index', $confirmando) }}"
+           class="px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition text-xs"
+           title="Gestionar Pagos">
+            <i class="bi bi-currency-dollar"></i>
+        </a>
+
+        @php
+            $documento = $confirmando->documentos->first();
+        @endphp
+
+        @if($documento)
+            <a href="{{ route('confirmandos.documentos.edit', [$confirmando->id, $documento->id]) }}"
+               class="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition text-xs"
+               title="Gestionar Documentos">
+                <i class="bi bi-folder-check"></i>
+            </a>
+        @else
+            <span class="text-gray-400 text-xs">Sin documento</span>
+        @endif
+
+        <form action="{{ route('confirmandos.destroy', $confirmando) }}" method="POST"
+              onsubmit="return confirm('¿Seguro que deseas eliminar a {{ $confirmando->nombre }}? Esta acción es irreversible.');">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+                    class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition text-xs"
+                    title="Eliminar">
+                <i class="bi bi-trash"></i>
+            </button>
+        </form>
+    </div>
+</td>
+
                         </tr>
                         @empty
                         <tr>
@@ -125,4 +138,5 @@
     </x-sidebar>
 
 </body>
+
 </html>
