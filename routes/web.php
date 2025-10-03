@@ -9,24 +9,24 @@ use App\Http\Controllers\GuiaController;
 use App\Http\Controllers\ComunidadController;
 use App\Http\Controllers\PerfilConfirmandoController;
 use App\Http\Controllers\DocumentoController;
+use Dom\Document;
 
-// -------------------
 // Rutas públicas
-// -------------------
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-// Perfil de confirmando (público)
+
+
+// Rutas de Perfil (accesibles para cualquiera)
 Route::get('perfil', [PerfilConfirmandoController::class, 'showForm'])->name('perfil.form');
 Route::post('perfil', [PerfilConfirmandoController::class, 'search'])->name('perfil.search');
 Route::get('/', [PerfilConfirmandoController::class, 'welcome'])->name('welcome');
 Route::get('/buscar-confirmando', [ConfirmandoController::class, 'buscar'])->name('buscar.confirmando');
 
-// -------------------
-// Rutas protegidas (auth Jetstream)
-// -------------------
+
+// Rutas protegidas por el middleware de autenticación de Jetstream
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -37,41 +37,34 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    // CRUD confirmandos, jornadas, guías
+    // Módulos CRUD
     Route::resource('confirmandos', ConfirmandoController::class);
     Route::resource('jornadas', JornadaController::class);
     Route::resource('guias', GuiaController::class);
 
-    // Pagos (anidados en confirmandos)
+
+    // Rutas anidadas (pagos)
     Route::prefix('confirmandos/{confirmando}')->group(function () {
         Route::resource('pagos', PagoController::class);
     });
 
-    // Asistencias (anidados en jornadas)
+    // Rutas anidadas (asistencias)
     Route::prefix('jornadas/{jornada}')->group(function () {
         Route::get('asistencias/edit', [AsistenciaController::class, 'edit'])->name('asistencias.edit');
         Route::put('asistencias', [AsistenciaController::class, 'update'])->name('asistencias.update');
     });
 
-    // Comunidades
+    // Rutas de Comunidades
     Route::get('comunidades/designar', [ComunidadController::class, 'designar'])->name('comunidades.designar');
     Route::post('comunidades/designar', [ComunidadController::class, 'guardarDesignacion'])->name('comunidades.guardarDesignacion');
     Route::resource('comunidades', ComunidadController::class)->parameters([
         'comunidades' => 'comunidad'
     ]);
 
-    // Exportar documentos
-Route::get('/documentos/export/csv', [DocumentoController::class, 'export'])
-    ->name('documentos.export.csv');
+    Route::get('/documentos/export/csv', [DocumentoController::class, 'export'])
+     ->name('documentos.export.csv');
 
-// CRUD documentos (general)
-Route::resource('documentos', DocumentoController::class);
-
-// Rutas de documentos asociadas a un confirmando (evitamos duplicar nombres)
-Route::get('confirmandos/{confirmando}/documentos/edit', [DocumentoController::class, 'edit'])
-    ->name('confirmandos.documentos.edit');
-
-Route::put('confirmandos/{confirmando}/documentos', [DocumentoController::class, 'update'])
-    ->name('confirmandos.documentos.update');
-
+ Route::resource('documentos', DocumentoController::class);
+Route::get('confirmandos/{confirmando}/documentos/edit', [DocumentoController::class, 'edit'])->name('documentos.edit');
+Route::put('confirmandos/{confirmando}/documentos', [DocumentoController::class, 'update'])->name('documentos.update');
 });

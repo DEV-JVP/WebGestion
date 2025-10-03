@@ -86,7 +86,11 @@
                                        title="Gestionar Pagos">
                                         <i class="bi bi-currency-dollar"></i>
                                     </a>
-                               
+                                    <a href="{{ route('documentos.edit', $confirmando) }}"
+                                       class="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition text-xs"
+                                       title="Gestionar Documentos">
+                                        <i class="bi bi-folder-check"></i>
+                                    </a>
                                     <form action="{{ route('confirmandos.destroy', $confirmando) }}" method="POST"
                                           onsubmit="return confirm('¿Seguro que deseas eliminar a {{ $confirmando->nombre }}? Esta acción es irreversible.');">
                                         @csrf
