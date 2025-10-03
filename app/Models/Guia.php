@@ -14,6 +14,7 @@ class Guia extends Model
         'nombre',
         'telefono',       
         'comunidad_id',
+        'tipo_cargo',
     ];
 
     /**

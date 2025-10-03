@@ -26,7 +26,10 @@ class PagoController extends Controller
             'fecha' => 'required|date',
             'boleta' => 'nullable|string',
             'tipo' => 'required|in:inscripcion,mensualidad,extraordinario',
+            'metodo_pago' => 'required|in:Transferencia Bancaria,Yape o Plin,Efectivo',
+            'fisico' => 'nullable|regex:/^[A-Za-z0-9\-]+$/|max:50',
             'observacion' => 'nullable|string',
+
         ]);
 
         $validated['confirmando_id'] = $confirmando->id;
@@ -48,6 +51,8 @@ class PagoController extends Controller
             'fecha' => 'required|date',
             'boleta' => 'nullable|string',
             'tipo' => 'required|in:inscripcion,mensualidad,extraordinario',
+            'metodo_pago' => 'required|in:Transferencia Bancaria,Yape o Plin,Efectivo',
+            'fisico' => 'nullable|regex:/^[A-Za-z0-9\-]+$/|max:50',
             'observacion' => 'nullable|string',
         ]);
 

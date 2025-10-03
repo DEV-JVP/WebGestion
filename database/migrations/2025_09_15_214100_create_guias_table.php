@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('comunidad_id')->constrained('comunidades')->cascadeOnDelete();
             $table->string('nombre');
-            $table->string('telefono')->nullable();           
+            $table->string('telefono')->nullable();      
+            $table->string('tipo_cargo')->nullable();
+     
             $table->timestamps();
         });
     }

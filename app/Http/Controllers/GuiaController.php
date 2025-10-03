@@ -26,11 +26,12 @@ class GuiaController extends Controller
             'nombre' => 'required|string|max:255',
             'telefono' => 'nullable|string|max:50',         
             'comunidad_id' => 'required|exists:comunidades,id',
+             'tipo_cargo' => 'nullable|string|in:Guia,Logistica,Coordinacion,Sonido',
         ]);
 
         Guia::create($validated);
 
-        return redirect()->route('guias.index')->with('success', 'Guía creada correctamente.');
+        return redirect()->route('guias.index')->with('success', 'Equipo creada correctamente.');
     }
 
     public function show(Guia $guia)
@@ -50,16 +51,17 @@ class GuiaController extends Controller
             'nombre' => 'required|string|max:255',
             'telefono' => 'nullable|string|max:50',      
             'comunidad_id' => 'required|exists:comunidades,id',
+             'tipo_cargo' => 'nullable|string|in:Guia,Logistica,Coordinacion,Sonido',
         ]);
 
         $guia->update($validated);
 
-        return redirect()->route('guias.index')->with('success', 'Guía actualizada correctamente.');
+        return redirect()->route('guias.index')->with('success', 'Equipo actualizada correctamente.');
     }
 
     public function destroy(Guia $guia)
     {
         $guia->delete();
-        return redirect()->route('guias.index')->with('success', 'Guía eliminada.');
+        return redirect()->route('guias.index')->with('success', 'Equipo eliminada.');
     }
 }

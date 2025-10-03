@@ -4,17 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pago extends Model
+class Documento extends Model
 {
     protected $fillable = [
         'confirmando_id',
-        'monto',
-        'fecha',
-        'boleta',
-        'tipo',
-        'metodo_pago', // 👈 nuevo campo
-        'fisico',   
-        'observacion',
+        'dni_confirmando',
+        'partida_bautizo',
+        'dni_padrino',
+        'constancia_confirmacion',
+        'partida_matrimonio_religioso',
     ];
 
     public function confirmando()

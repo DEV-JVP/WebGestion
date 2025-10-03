@@ -18,7 +18,11 @@ class Confirmando extends Model
         'telefono_padre',
         'nombre_madre',
         'telefono_madre',
-        'comunidad_id'
+        'comunidad_id',
+        'situacion_matrimonial_padres',
+        'situacion_matrimonial_comentario',
+        'tipo_sangre',
+        'alergias',
     ];
 
     public function comunidad()
@@ -36,10 +40,12 @@ class Confirmando extends Model
         return $this->hasMany(Pago::class);
     }
     public function asistencias()
-{
-    return $this->hasMany(Asistencia::class);
-}
+    {
+        return $this->hasMany(Asistencia::class);
+    }
 
-
-
+    public function documentos()
+    {
+        return $this->hasOne(Documento::class);
+    }
 }

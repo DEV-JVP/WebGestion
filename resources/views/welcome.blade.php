@@ -1,243 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
-
-
-
-
-</head>
-<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Navegación</title>
+  <title>Consulta Confirmación</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    @vite(['resources/js/app.js', 'resources/css/app.css'])
-  <style>
+   <style>
     body {
-      margin: 0;
-      font-family: "Open Sans", sans-serif;
-      background: linear-gradient(to right top, #8e44ad 0%, #3498db 100%);
-      height: 100vh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-
-    nav {
-      max-width: 960px;
-      margin: 80px auto; /* más abajo y centrado */
-      background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.2) 25%,
-        rgba(255, 255, 255, 0.2) 75%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1),
-                  inset 0 0 1px rgba(189, 5, 5, 0.6);
-      padding: 15px 0;
-      border-radius: 8px;
-      text-align: center;
+    main {
+      flex: 1;
     }
-
-    nav ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    nav ul li {
-      display: inline-block;
-    }
-
-   nav ul li a {
-  padding: 15px 20px;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 18px;
-  font-weight: bold !important;  /* 👈 fuerza la negrita */
-  text-decoration: none;
-  display: block;
-  transition: all 0.3s ease;
-}
-
-nav ul li a:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  color: rgba(1, 12, 43, 1);
-}
-
-   
   </style>
 </head>
-<body>
-<nav>
-  <ul class="nav justify-content-center">
-    <li class="nav-item">
-      <a class="nav-link text-dark fw-bold" href="#">
-        <i class="bi bi-house-door"></i> Home
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark fw-bold" href="#">
-        <i class="bi bi-info-circle"></i> About
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark fw-bold" href="#">
-        <i class="bi bi-gear"></i> Services
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark fw-bold" href="#">
-        <i class="bi bi-envelope"></i> Contact
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark fw-bold" href="/login">
-        <i class="bi bi-person-circle"></i> 
-      </a>
-    </li>
-  </ul>
-</nav>
+<body class="bg-gradient-to-r from-purple-700 to-blue-500 min-h-screen font-sans">
 
-    <section id="buscar" class="py-5">
-        <div class="container">
+  <!-- NAV -->
+  <nav class="mt-10 flex justify-center">
+    <ul class="flex items-center space-x-6 bg-white/20 backdrop-blur-md px-6 py-3 rounded-lg shadow-md">
+      <li><a href="#" class="text-white font-semibold hover:text-yellow-300 transition">Inicio</a></li>
+      <li><a href="#" class="text-white font-semibold hover:text-yellow-300 transition">Perfil</a></li>
+      <li><a href="#" class="text-white font-semibold hover:text-yellow-300 transition">Pagos</a></li>
+      <li><a href="#" class="text-white font-semibold hover:text-yellow-300 transition">Documentos</a></li>
+      
+      <!-- Botón Login -->
+      <li>
+        <a href="/login" class="bg-yellow-400 text-gray-900 font-bold px-4 py-2 rounded-lg hover:bg-yellow-500 transition">
+          Login
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-            {{-- Formulario de búsqueda --}}
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h2 class="h5 text-dark mb-3">Consulta(Confirmacion)</h2>
-                    <form method="GET" action="{{ route('welcome') }}">
-                        <div class="input-group">
-                            <input type="text" name="dni" class="form-control" placeholder="Ingrese DNI" required>
-                            <button class="btn btn-dark" type="submit">Buscar</button>
-                        </div>
-                    </form>
-                    @if($errors->any())
-                    <div class="alert alert-danger mt-3">
-                        {{ $errors->first('dni') }}
-                    </div>
-                    @endif
-                </div>
-            </div>
+  <!-- BUSCAR -->
+  <section id="buscar" class="py-10">
+    <div class="max-w-3xl mx-auto">
 
-            {{-- Modal de resultado --}}
-            @if($confirmando)
-            <div class="modal fade show" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content bg-light text-dark shadow-lg">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="resultadoModalLabel">
-                                <i class="bi bi-person-circle text-danger me-2"></i>
-                                {{ $confirmando->nombre }}
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body">
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-700 mb-4">Consulta (Confirmación)</h2>
+        <form method="GET" action="{{ route('welcome') }}" class="flex space-x-2">
+          <input type="text" name="dni" class="w-full border-gray-300 rounded-lg focus:ring focus:ring-indigo-200" placeholder="Ingrese DNI" required>
+          <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Buscar</button>
+        </form>
+        @if($errors->any())
+          <div class="mt-3 p-3 bg-red-100 text-red-700 rounded">
+            {{ $errors->first('dni') }}
+          </div>
+        @endif
+      </div>
 
-                            {{-- Información personal --}}
-                            <h6 class="text-danger">Información personal</h6>
-                            <ul class="list-unstyled mb-3">
-                                <li><strong>DNI:</strong> {{ $confirmando->dni }}</li>
-                                <li><strong>Colegio:</strong> {{ $confirmando->colegio ?? 'N/A' }}</li>
-                                <li><strong>Capilla cercana:</strong> {{ $confirmando->capilla_cercana ?? 'N/A' }}</li>
-                                <li><strong>Dirección:</strong> {{ $confirmando->direccion ?? 'N/A' }}</li>
-                                <li><strong>Observaciones:</strong> {{ $confirmando->observaciones ?? 'N/A' }}</li>
-                                <li><strong>Comunidad:</strong> {{ $confirmando->comunidad?->nombre ?? 'Sin comunidad asignada' }}</li>
-                            </ul>
-
-                            {{-- Asistencias --}}
-                            <h6 class="text-danger">Asistencias</h6>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped align-middle">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Tema</th>
-                                            <th>Estado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($confirmando->asistencias as $asistencia)
-                                        <tr>
-                                            <td>{{ \Carbon\Carbon::parse($asistencia->jornada->fecha)->format('d/m/Y') }}</td>
-                                            <td>{{ $asistencia->jornada->tema }}</td>
-                                            <td>
-                                                @switch($asistencia->estado)
-                                                @case('asistio')
-                                                <span class="badge bg-success">Asistió</span>
-                                                @break
-                                                @case('tardanza')
-                                                <span class="badge bg-warning text-dark">Tardanza</span>
-                                                @break
-                                                @case('falta_justificada')
-                                                <span class="badge bg-info">Falta Justificada</span>
-                                                @break
-                                                @case('falta_sin_justificar')
-                                                <span class="badge bg-danger">Falta Sin Justificar</span>
-                                                @break
-                                                @default
-                                                <span class="badge bg-secondary">Sin registro</span>
-                                                @endswitch
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="3" class="text-center text-muted">No hay registros de asistencia.</td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-
-                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Script para abrir el modal automáticamente --}}
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    var modal = new bootstrap.Modal(document.getElementById('resultadoModal'));
-                    modal.show();
-                });
-            </script>
-            @endif
-
+      <!-- RESULTADO -->
+      @if($confirmando)
+      <div class="mt-8 bg-white shadow-lg rounded-lg p-6">
+        
+        <!-- Datos personales -->
+        <h3 class="text-xl font-bold text-indigo-700 mb-4"><i class="bi bi-person-circle mr-2"></i>{{ $confirmando->nombre }}</h3>
+        <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
+          <p><strong>DNI:</strong> {{ $confirmando->dni }}</p>
+          <p><strong>Colegio:</strong> {{ $confirmando->colegio ?? 'N/A' }}</p>
+          <p><strong>Capilla cercana:</strong> {{ $confirmando->capilla_cercana ?? 'N/A' }}</p>
+          <p><strong>Dirección:</strong> {{ $confirmando->direccion ?? 'N/A' }}</p>
+          <p><strong>Observaciones:</strong> {{ $confirmando->observaciones ?? 'N/A' }}</p>
+          <p><strong>Comunidad:</strong> {{ $confirmando->comunidad?->nombre ?? 'Sin comunidad asignada' }}</p>
         </div>
-    </section>
 
+        <!-- Asistencias -->
+        <h4 class="mt-6 mb-2 text-lg font-semibold text-indigo-700">Asistencias</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full border border-gray-200 rounded-lg text-sm">
+            <thead class="bg-gray-100 text-gray-700">
+              <tr>
+                <th class="px-3 py-2 border">Fecha</th>
+                <th class="px-3 py-2 border">Tema</th>
+                <th class="px-3 py-2 border">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse($confirmando->asistencias as $asistencia)
+              <tr class="text-center">
+                <td class="px-3 py-2 border">{{ \Carbon\Carbon::parse($asistencia->jornada->fecha)->format('d/m/Y') }}</td>
+                <td class="px-3 py-2 border">{{ $asistencia->jornada->tema }}</td>
+                <td class="px-3 py-2 border">
+                  @switch($asistencia->estado)
+                    @case('asistio')
+                      <span class="px-2 py-1 bg-green-200 text-green-700 rounded">Asistió</span>
+                      @break
+                    @case('tardanza')
+                      <span class="px-2 py-1 bg-yellow-200 text-yellow-800 rounded">Tardanza</span>
+                      @break
+                    @case('falta_justificada')
+                      <span class="px-2 py-1 bg-blue-200 text-blue-700 rounded">Falta Justificada</span>
+                      @break
+                    @case('falta_sin_justificar')
+                      <span class="px-2 py-1 bg-red-200 text-red-700 rounded">Falta Sin Justificar</span>
+                      @break
+                    @default
+                      <span class="px-2 py-1 bg-gray-200 text-gray-700 rounded">Sin registro</span>
+                  @endswitch
+                </td>
+              </tr>
+              @empty
+              <tr>
+                <td colspan="3" class="px-3 py-2 text-gray-500">No hay registros de asistencia.</td>
+              </tr>
+              @endforelse
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Documentos -->
+        <h4 class="mt-6 mb-2 text-lg font-semibold text-indigo-700">Documentos</h4>
+        <ul class="grid grid-cols-2 gap-3 text-sm text-gray-700">
+          <li class="flex items-center">
+            @if($documentos->dni_confirmando) 
+              <i class="bi bi-check-circle-fill text-green-600 mr-2"></i>
+            @else 
+              <i class="bi bi-x-circle-fill text-red-600 mr-2"></i>
+            @endif
+            DNI Confirmando
+          </li>
+          <li class="flex items-center">
+            @if($documentos->partida_bautizo) 
+              <i class="bi bi-check-circle-fill text-green-600 mr-2"></i>
+            @else 
+              <i class="bi bi-x-circle-fill text-red-600 mr-2"></i>
+            @endif
+            Partida Bautizo
+          </li>
+          <li class="flex items-center">
+            @if($documentos->dni_padrino) 
+              <i class="bi bi-check-circle-fill text-green-600 mr-2"></i>
+            @else 
+              <i class="bi bi-x-circle-fill text-red-600 mr-2"></i>
+            @endif
+            DNI Padrino
+          </li>
+          <li class="flex items-center">
+            @if($documentos->constancia_confirmacion) 
+              <i class="bi bi-check-circle-fill text-green-600 mr-2"></i>
+            @else 
+              <i class="bi bi-x-circle-fill text-red-600 mr-2"></i>
+            @endif
+            Constancia Confirmación
+          </li>
+          <li class="flex items-center">
+            @if($documentos->partida_matrimonio_religioso) 
+              <i class="bi bi-check-circle-fill text-green-600 mr-2"></i>
+            @else 
+              <i class="bi bi-x-circle-fill text-red-600 mr-2"></i>
+            @endif
+            Partida Matrimonio Religioso
+          </li>
+        </ul>
+
+      </div>
+      @endif
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-4 text-center mt-auto">
+    &copy; {{ date('Y') }} Coordinación de Confirmación - Todos los derechos reservados
+  </footer>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </body>
-</html>
-
-
-
-
-    <!-- Footer-->
-<footer class="bg-blue text-white py-3 fixed-bottom">
-  <div class="container text-center">
-    <small>&copy; 2023 - Company Name</small>
-  </div>
-</footer>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SimpleLightbox plugin JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-</body>
-
 </html>

@@ -17,10 +17,10 @@ LOG_LEVEL="debug"
 
 DB_CONNECTION="mysql"
 DB_HOST="hopper.proxy.rlwy.net"
-DB_PORT="46168"
+DB_PORT="59022"
 DB_DATABASE="railway"
 DB_USERNAME="root"
-DB_PASSWORD="CcWJJFwMomTHaeVDlqYhcxvGyDXiNDjF"
+DB_PASSWORD="OgDXtGCLrvlcymbsDVRXeXbYQBOhOLLV"
 
 
 SESSION_DRIVER="database"

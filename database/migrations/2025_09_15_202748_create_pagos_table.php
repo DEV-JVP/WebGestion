@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date('fecha');
             $table->string('boleta')->nullable();
             $table->enum('tipo', ['inscripcion', 'mensualidad', 'extraordinario']);
+            $table->enum('metodo_pago', ['Transferencia Bancaria', 'Yape o Plin', 'Efectivo']); // nuevo campo
+            $table->string('fisico')->nullable(); // nuevo campo
             $table->text('observacion')->nullable();
             $table->timestamps();
         });

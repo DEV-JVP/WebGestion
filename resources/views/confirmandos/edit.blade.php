@@ -1,161 +1,229 @@
 <x-sidebar>
-    <div class="container my-5">
-        <div class="card shadow-lg border border-secondary rounded-3">
-            <div class="card-body p-4 p-md-5">
+    <div class="max-w-5xl mx-auto my-10">
+        <div class="bg-transparent shadow-xl rounded-2xl border border-gray-200">
+            <div class="p-8">
 
-                <h1 class="h3 fw-bold text-dark mb-4 border-bottom pb-3 d-flex align-items-center">
-                    <svg class="me-3 text-danger" width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                <!-- Título principal -->
+                <h1 class="text-2xl font-bold text-gray-800 mb-6 flex items-center border-b pb-3">
+                    <svg class="w-8 h-8 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0h-3c-.504 0-1.026-.062-1.5-.16A11.01 11.01 0 0112 18a11.01 11.01 0 01-2.5.84C8.026 19.938 7.504 20 7 20H3z" />
                     </svg>
                     Editar Confirmando
                 </h1>
 
-                {{-- Mostrar errores de validación --}}
+                <!-- Errores -->
                 @if ($errors->any())
-                <div class="alert alert-danger mb-4 shadow-sm" role="alert">
-                    <h4 class="alert-heading fs-5">¡Ups! Hubo algunos problemas con tu formulario:</h4>
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+                    <div class="bg-red-100 border border-red-300 text-red-700 p-4 rounded mb-6">
+                        <p class="font-semibold mb-2">Por favor, corrija los siguientes errores:</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
-                <form action="{{ route('confirmandos.update', $confirmando->id) }}" method="POST">
+                <form action="{{ route('confirmandos.update', $confirmando->id) }}" method="POST" class="space-y-10">
                     @csrf
                     @method('PUT')
 
-                    <h3 class="h5 text-primary mb-3 border-bottom pb-2">Datos Personales</h3>
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-6">
-                            <label for="dni" class="form-label">DNI <span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                name="dni"
-                                id="dni"
-                                value="{{ old('dni', $confirmando->dni) }}"
-                                required
-                                maxlength="10"
-                                pattern="[0-9]*"
-                                inputmode="numeric"
-                                placeholder="Solo números"
-                                class="form-control"
-                            >
+                    <!-- DATOS PERSONALES -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-600 border-b pb-2 mb-4">Datos Personales</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="dni" class="block font-medium text-gray-700">DNI <span class="text-red-500">*</span></label>
+                                <input type="text" id="dni" name="dni"
+                                       value="{{ old('dni', $confirmando->dni) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+                                       required maxlength="10" pattern="[0-9]*" inputmode="numeric">
+                            </div>
+                            <div>
+                                <label for="nombre" class="block font-medium text-gray-700">Nombre completo <span class="text-red-500">*</span></label>
+                                <input type="text" id="nombre" name="nombre"
+                                       value="{{ old('nombre', $confirmando->nombre) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+                                       required autocomplete="name">
+                            </div>
+                            <div>
+                                <label for="colegio" class="block font-medium text-gray-700">Colegio</label>
+                                <input type="text" id="colegio" name="colegio"
+                                       value="{{ old('colegio', $confirmando->colegio) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            </div>
+                            <div>
+                                <label for="capilla_cercana" class="block font-medium text-gray-700">Capilla cercana</label>
+                                <input type="text" id="capilla_cercana" name="capilla_cercana"
+                                       value="{{ old('capilla_cercana', $confirmando->capilla_cercana) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="direccion" class="block font-medium text-gray-700">Dirección</label>
+                                <input type="text" id="direccion" name="direccion"
+                                       value="{{ old('direccion', $confirmando->direccion) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="contacto_emergencia" class="block font-medium text-gray-700">Contacto Personal</label>
+                                <input type="text" id="contacto_emergencia" name="contacto_emergencia"
+                                       value="{{ old('contacto_emergencia', $confirmando->contacto_emergencia) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="nombre" class="form-label">Nombre Completo <span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                name="nombre"
-                                id="nombre"
-                                value="{{ old('nombre', $confirmando->nombre) }}"
-                                required
-                                autocomplete="name"
-                                placeholder="Nombre(s) y Apellido(s)"
-                                class="form-control"
-                            >
-                        </div>
-                        <div class="col-md-6">
-                            <label for="colegio" class="form-label">Colegio / Institución</label>
-                            <input type="text" name="colegio" id="colegio" value="{{ old('colegio', $confirmando->colegio) }}" placeholder="Nombre del colegio o parroquia" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="capilla_cercana" class="form-label">Capilla Cercana</label>
-                            <input type="text" name="capilla_cercana" id="capilla_cercana" value="{{ old('capilla_cercana', $confirmando->capilla_cercana) }}" placeholder="Capilla o Parroquia de referencia" class="form-control">
-                        </div>
-                        <div class="col-12">
-                            <label for="direccion" class="form-label">Dirección Domiciliaria</label>
-                            <input type="text" name="direccion" id="direccion" value="{{ old('direccion', $confirmando->direccion) }}" placeholder="Calle, número, ciudad/localidad" class="form-control">
-                        </div>
-                    </div>
+                    </section>
 
-                    <h3 class="h5 text-primary mb-3 border-bottom pb-2">Datos de Contacto Familiar</h3>
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-6">
-                            <div class="card card-body bg-light border-0 shadow-sm">
-                                <p class="fw-bold text-dark mb-3 border-bottom pb-2">Información del Padre</p>
-                                <div class="mb-3">
-                                    <label for="nombre_padre" class="form-label">Nombre</label>
-                                    <input type="text" name="nombre_padre" id="nombre_padre" value="{{ old('nombre_padre', $confirmando->nombre_padre) }}" class="form-control">
+                    <!-- DATOS FAMILIARES -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-600 border-b pb-2 mb-4">Datos de Contacto Familiar</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+                                <p class="font-semibold text-gray-700 mb-3">Información del Padre</p>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label for="nombre_padre" class="block text-sm font-medium text-gray-600">Nombre</label>
+                                        <input type="text" id="nombre_padre" name="nombre_padre"
+                                               value="{{ old('nombre_padre', $confirmando->nombre_padre) }}"
+                                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                    </div>
+                                    <div>
+                                        <label for="telefono_padre" class="block text-sm font-medium text-gray-600">Teléfono</label>
+                                        <input type="tel" id="telefono_padre" name="telefono_padre"
+                                               value="{{ old('telefono_padre', $confirmando->telefono_padre) }}"
+                                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="telefono_padre" class="form-label">Teléfono</label>
-                                    <input type="tel" name="telefono_padre" id="telefono_padre" value="{{ old('telefono_padre', $confirmando->telefono_padre) }}" inputmode="numeric" placeholder="Ej: 987654321" class="form-control">
+                            </div>
+
+                            <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+                                <p class="font-semibold text-gray-700 mb-3">Información de la Madre</p>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label for="nombre_madre" class="block text-sm font-medium text-gray-600">Nombre</label>
+                                        <input type="text" id="nombre_madre" name="nombre_madre"
+                                               value="{{ old('nombre_madre', $confirmando->nombre_madre) }}"
+                                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                    </div>
+                                    <div>
+                                        <label for="telefono_madre" class="block text-sm font-medium text-gray-600">Teléfono</label>
+                                        <input type="tel" id="telefono_madre" name="telefono_madre"
+                                               value="{{ old('telefono_madre', $confirmando->telefono_madre) }}"
+                                               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="col-md-6">
-                            <div class="card card-body bg-light border-0 shadow-sm">
-                                <p class="fw-bold text-dark mb-3 border-bottom pb-2">Información de la Madre</p>
-                                <div class="mb-3">
-                                    <label for="nombre_madre" class="form-label">Nombre</label>
-                                    <input type="text" name="nombre_madre" id="nombre_madre" value="{{ old('nombre_madre', $confirmando->nombre_madre) }}" class="form-control">
-                                </div>
-                                <div>
-                                    <label for="telefono_madre" class="form-label">Teléfono</label>
-                                    <input type="tel" name="telefono_madre" id="telefono_madre" value="{{ old('telefono_madre', $confirmando->telefono_madre) }}" inputmode="numeric" placeholder="Ej: 987654321" class="form-control">
+                    <!-- INFORMACIÓN FAMILIAR ADICIONAL -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-600 border-b pb-2 mb-4">Información Familiar Adicional</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="situacion_matrimonial_padres" class="block font-medium text-gray-700">Situación matrimonial de los padres</label>
+                                <select id="situacion_matrimonial_padres" name="situacion_matrimonial_padres" onchange="toggleComentario(this.value)"
+                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                    <option value="">-- Seleccionar --</option>
+                                    @foreach (['casados'=>'Casados','convivientes'=>'Convivientes','separados'=>'Separados','divorciados'=>'Divorciados','viudos'=>'Viudos','otros'=>'Otros'] as $key => $label)
+                                        <option value="{{ $key }}" {{ old('situacion_matrimonial_padres', $confirmando->situacion_matrimonial_padres) == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div id="comentario_div" class="{{ old('situacion_matrimonial_padres', $confirmando->situacion_matrimonial_padres) == 'otros' ? '' : 'hidden' }}">
+                                <label for="situacion_matrimonial_comentario" class="block font-medium text-gray-700">Comentario</label>
+                                <input type="text" id="situacion_matrimonial_comentario" name="situacion_matrimonial_comentario"
+                                       value="{{ old('situacion_matrimonial_comentario', $confirmando->situacion_matrimonial_comentario) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- INFORMACIÓN MÉDICA -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-600 border-b pb-2 mb-4">Información Médica</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="tipo_sangre" class="block font-medium text-gray-700">Tipo de sangre</label>
+                                <input type="text" id="tipo_sangre" name="tipo_sangre"
+                                       value="{{ old('tipo_sangre', $confirmando->tipo_sangre) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            </div>
+                            <div>
+                                <label for="alergias" class="block font-medium text-gray-700">Alergias</label>
+                                <input type="text" id="alergias" name="alergias"
+                                       value="{{ old('alergias', $confirmando->alergias) }}"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- INFORMACIÓN ECLESIAL -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-600 border-b pb-2 mb-4">Información Eclesial</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="comunidad_id" class="block font-medium text-gray-700">Comunidad</label>
+                                <select id="comunidad_id" name="comunidad_id"
+                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                    <option value="">-- Seleccionar comunidad --</option>
+                                    @foreach ($comunidades as $comunidad)
+                                        <option value="{{ $comunidad->id }}" {{ old('comunidad_id', $confirmando->comunidad_id) == $comunidad->id ? 'selected' : '' }}>
+                                            {{ $comunidad->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block font-medium text-gray-700 mb-2">Sacramentos recibidos</label>
+                                <div class="flex flex-wrap gap-2">
+                                    @php
+                                        $sacramentosMarcados = old('sacramentos', $confirmando->sacramentos->pluck('id')->toArray());
+                                    @endphp
+                                    @foreach ($sacramentos as $sacramento)
+                                        <label class="flex items-center space-x-2 px-3 py-1 border rounded-lg cursor-pointer hover:bg-gray-100">
+                                            <input type="checkbox" id="sacramento_{{ $sacramento->id }}" name="sacramentos[]" value="{{ $sacramento->id }}"
+                                                   {{ in_array($sacramento->id, $sacramentosMarcados) ? 'checked' : '' }}
+                                                   class="text-blue-600 focus:ring-blue-500 rounded">
+                                            <span>{{ $sacramento->nombre }}</span>
+                                        </label>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <label for="contacto_emergencia" class="form-label">Contacto de Emergencia (Nombre y Teléfono)</label>
-                            <input type="text" name="contacto_emergencia" id="contacto_emergencia" value="{{ old('contacto_emergencia', $confirmando->contacto_emergencia) }}" placeholder="Ej: Abuela, 912345678" class="form-control">
-                        </div>
-                    </div>
+                    </section>
 
-                    <h3 class="h5 text-primary mb-3 border-bottom pb-2">Información Eclesial</h3>
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-6">
-                            <label for="comunidad_id" class="form-label">Comunidad / Grupo</label>
-                            <select name="comunidad_id" id="comunidad_id" class="form-select">
-                                <option value="">-- Seleccionar comunidad --</option>
-                                @foreach ($comunidades as $comunidad)
-                                    @php
-                                        $isSelected = old('comunidad_id', $confirmando->comunidad_id) == $comunidad->id;
-                                    @endphp
-                                    <option value="{{ $comunidad->id }}" {{ $isSelected ? 'selected' : '' }}>
-                                        {{ $comunidad->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
+                    <!-- OBSERVACIONES -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-600 border-b pb-2 mb-4">Observaciones</h3>
+                        <div>
+                            <label for="observaciones" class="block font-medium text-gray-700">Notas Adicionales</label>
+                            <textarea id="observaciones" name="observaciones" rows="4"
+                                      class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">{{ old('observaciones', $confirmando->observaciones) }}</textarea>
                         </div>
-                        <div class="col-md-6">
-                            <label for="sacramentos" class="form-label">Sacramentos recibidos</label>
-                            <select name="sacramentos[]" id="sacramentos" multiple class="form-select" style="height: 120px;">
-                                @foreach ($sacramentos as $sacramento)
-                                    @php
-                                        // Obtener los IDs de sacramentos del modelo
-                                        $currentSacramentos = $confirmando->sacramentos->pluck('id')->toArray();
-                                        // Comprobar si está seleccionado (usando old o el valor actual)
-                                        $isSelected = in_array($sacramento->id, old('sacramentos', $currentSacramentos));
-                                    @endphp
-                                    <option value="{{ $sacramento->id }}" {{ $isSelected ? 'selected' : '' }}>
-                                        {{ $sacramento->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="form-text">Mantén presionado `Ctrl` o `Cmd` para seleccionar varios.</div>
-                        </div>
-                    </div>
+                    </section>
 
-                    <h3 class="h5 text-primary mb-3 border-bottom pb-2">Observaciones y Notas</h3>
-                    <div class="mb-4">
-                        <label for="observaciones" class="form-label">Observaciones Adicionales</label>
-                        <textarea name="observaciones" id="observaciones" rows="5" placeholder="Notas sobre el historial eclesial, necesidades especiales, etc." class="form-control">{{ old('observaciones', $confirmando->observaciones) }}</textarea>
-                    </div>
-
-                    <div class="d-flex justify-content-end space-x-2 border-top pt-3">
-                        <a href="{{ route('confirmandos.index') }}" class="btn btn-outline-secondary me-2">
+                    <!-- BOTONES -->
+                    <div class="flex justify-between items-center pt-6 border-t">
+                        <a href="{{ route('confirmandos.index') }}"
+                           class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100">
                             Cancelar
                         </a>
-                        <button type="submit" class="btn btn-danger shadow-sm">
-                            Guardar Cambios
+                        <button type="submit"
+                                class="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700">
+                            Actualizar Confirmando
                         </button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleComentario(valor) {
+            let div = document.getElementById('comentario_div');
+            div.classList.toggle('hidden', valor !== 'otros');
+        }
+    </script>
 </x-sidebar>

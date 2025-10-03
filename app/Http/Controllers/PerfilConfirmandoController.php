@@ -30,27 +30,38 @@ class PerfilConfirmandoController extends Controller
 
         return view('perfil.show', compact('confirmando'));
     }
+public function welcome(Request $request)
+{
+    $confirmando = null;
+    $documentos = new \App\Models\Documento([
+        'dni_confirmando' => false,
+        'partida_bautizo' => false,
+        'dni_padrino' => false,
+        'constancia_confirmacion' => false,
+        'partida_matrimonio_religioso' => false,
+    ]);
 
-    public function welcome(Request $request)
-    {
-        $confirmando = null;
+    if ($request->has('dni')) {
+        $request->validate([
+            'dni' => 'required|string',
+        ]);
 
-        if ($request->has('dni')) {
-            $request->validate([
-                'dni' => 'required|string',
-            ]);
+        $confirmando = Confirmando::with(['asistencias.jornada', 'comunidad.guias', 'documentos'])
+            ->where('dni', $request->dni)
+            ->first();
 
-            $confirmando = Confirmando::with(['asistencias.jornada', 'comunidad.guias'])
-                ->where('dni', $request->dni)
-                ->first();
-
-            if (!$confirmando) {
-                return redirect()->route('welcome')->withErrors(['dni' => 'no actualizado']);
-            }
+        if (!$confirmando) {
+            return redirect()->route('welcome')->withErrors(['dni' => 'no actualizado']);
         }
 
-        return view('welcome', compact('confirmando'));
+        if ($confirmando->documentos) {
+            $documentos = $confirmando->documentos;
+        }
     }
+
+    return view('welcome', compact('confirmando', 'documentos'));
+}
+
     public function buscar(Request $request)
     {
         $request->validate([

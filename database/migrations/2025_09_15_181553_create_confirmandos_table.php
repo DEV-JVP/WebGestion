@@ -24,6 +24,13 @@ return new class extends Migration
             $table->string('nombre_madre')->nullable();
             $table->string('telefono_madre')->nullable();          
             $table->text('observaciones')->nullable();
+
+             $table->string('situacion_matrimonial_padres')->nullable();
+            $table->string('situacion_matrimonial_comentario')->nullable();
+            $table->string('tipo_sangre', 5)->nullable();
+            $table->text('alergias')->nullable();
+
+            
             $table->foreignId('comunidad_id')->nullable()->constrained('comunidades')->nullOnDelete();
             $table->timestamps();
         });

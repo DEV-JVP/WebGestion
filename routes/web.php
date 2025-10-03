@@ -8,11 +8,21 @@ use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\GuiaController;
 use App\Http\Controllers\ComunidadController;
 use App\Http\Controllers\PerfilConfirmandoController;
+use App\Http\Controllers\DocumentoController;
+use Dom\Document;
 
 // Rutas públicas
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/documentos/export/csv', [DocumentoController::class, 'export'])
+     ->name('documentos.export.csv');
+
+ Route::resource('documentos', DocumentoController::class);
+Route::get('confirmandos/{confirmando}/documentos/edit', [DocumentoController::class, 'edit'])->name('documentos.edit');
+Route::put('confirmandos/{confirmando}/documentos', [DocumentoController::class, 'update'])->name('documentos.update');
+
+
 
 // Rutas de Perfil (accesibles para cualquiera)
 Route::get('perfil', [PerfilConfirmandoController::class, 'showForm'])->name('perfil.form');

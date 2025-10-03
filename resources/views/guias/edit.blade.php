@@ -45,6 +45,28 @@
                         </div>
 
                         <div class="col-12">
+    <label for="tipo_cargo" class="form-label d-flex align-items-center">
+        <i class="bi bi-award me-2 text-secondary"></i>
+        Tipo de Cargo <span class="text-danger">*</span>
+    </label>
+    <select
+        name="tipo_cargo"
+        id="tipo_cargo"
+        required
+        class="form-select @error('tipo_cargo') is-invalid @enderror">
+        <option value="" disabled>Seleccione un cargo</option>
+        <option value="Guia" {{ old('tipo_cargo', $guia->tipo_cargo) == 'Guia' ? 'selected' : '' }}>Guía</option>
+        <option value="Logistica" {{ old('tipo_cargo', $guia->tipo_cargo) == 'Logistica' ? 'selected' : '' }}>Logística</option>
+        <option value="Coordinacion" {{ old('tipo_cargo', $guia->tipo_cargo) == 'Coordinacion' ? 'selected' : '' }}>Coordinación</option>
+        <option value="Sonido" {{ old('tipo_cargo', $guia->tipo_cargo) == 'Sonido' ? 'selected' : '' }}>Sonido</option>
+    </select>
+    @error('tipo_cargo')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+
+                        <div class="col-12">
                             <label for="telefono" class="form-label d-flex align-items-center">
                                 <i class="bi bi-phone me-2 text-secondary"></i>
                                 Teléfono

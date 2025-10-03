@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+   font-family: "Roboto", sans-Light 300;
+ 
+
+}
+
+.wrapper {
+  display: flex;
+}
+
+.main {
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+#sidebar {
+  width: 90px;
+  min-width: 90px;
+  transition: all 0.25s ease-in-out;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+  display: none;
+}
+
+#sidebar.expand {
+  width: 260px;
+  min-width: 260px;
+}
+
+.toggle-btn {
+  width: 30px;
+  height: 30px;
+  color: beige;
+  border-radius: 0.425rem;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #323c55;
+}
+
+.toggle-btn i {
+  color: aliceblue;
+}
+
+#sidebar.expand .sidebar-logo,
+#sidebar.expand a.sidebar-link span {
+  animation: fadeIn .25s ease;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.sidebar-logo a {
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+a.sidebar-link {
+  padding: .625rem 1.625rem;
+  color: #fff;
+  display: block;
+  white-space: nowrap;
+  font-weight: 700;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.sidebar-nav {
+  padding: 0.7rem 0;
+  flex: 11 auto;
+  z-index: 10;
+}
+
+.sidebar-link i,
+.dropdown-item i {
+  font-size: 1.1rem;
+  margin-right: .75rem;
+}
+
+a.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, .075);
+  border-left: 3px solid #3b7ddd;
+}
+
+.sidebar-item {
+  position: relative;
+}
+
+/* Dropdown en modo sidebar colapsado */
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+  position: absolute;
+  top: 0;
+  left: 90px;
+  background-color: #0e2238;
+  padding: 0;
+  min-width: 15em;
+  display: none;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
+  display: block;
+  max-height: 15em;
+  width: 100%;
+  opacity: 1;
+}
+
+/* Flechas en expandido */
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+  border: solid;
+  border-width: 0.075rem 0.075rem 0 0;
+  content: "";
+  display: inline-block;
+  padding: 2px;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.4rem;
+  transform: rotate(-135deg);
+  transition: all 0.2s ease-out;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+  transform: rotate(45deg);
+  transition: all 0.2s ease-out;
+}
+
+.sidebar-dropdown .sidebar-link {
+  position: relative;
+  padding-left: 3rem;
+  transition: all 0.5s;
+}
+
+.sidebar-dropdown a.sidebar-link::before {
+  content: "";
+  height: 0.125rem;
+  width: 0.375rem;
+  background-color: #FFFFFF80;
+  position: absolute;
+  left: 1.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.5s;
+}
+
+.sidebar-dropdown a.sidebar-link:hover {
+  background-color: transparent;
+  border-left: 3px solid transparent;
+  padding-left: 3.8rem;
+  color: #7277f2;
+}
+
+/* Que el botón de logout tenga mismo estilo que los enlaces */
+.sidebar-footer button.sidebar-link {
+    text-align: left;
+    padding: .625rem 1.625rem;
+    color: #fff;
+    font-weight: 700;
+    border-left: 3px solid transparent;
+    width: 100%;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Hover igual al <a> */
+.sidebar-footer button.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, .075);
+    border-left: 3px solid #3b7ddd;
+    color: #fff;
+}

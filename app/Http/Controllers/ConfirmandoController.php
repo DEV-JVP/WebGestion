@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Confirmando;
 use Illuminate\Http\Request;
 use App\Models\Comunidad;
+use App\Models\Documento;
+
 use App\Models\Sacramento;
 
 class ConfirmandoController extends Controller
@@ -41,6 +43,10 @@ class ConfirmandoController extends Controller
             'comunidad_id' => 'nullable|exists:comunidades,id',
             'sacramentos' => 'array',
             'sacramentos.*' => 'exists:sacramentos,id',
+              'situacion_matrimonial_padres' => 'nullable|in:casados,convivientes,separados,divorciados,viudos,otros',
+            'situacion_matrimonial_comentario' => 'nullable|string|max:255',
+            'tipo_sangre' => 'nullable|string|max:5',
+            'alergias' => 'nullable|string',
         ]);
 
         $confirmando = Confirmando::create($validated);
@@ -84,6 +90,11 @@ class ConfirmandoController extends Controller
             'comunidad_id' => 'nullable|exists:comunidades,id',
             'sacramentos' => 'array',
             'sacramentos.*' => 'exists:sacramentos,id',
+
+             'situacion_matrimonial_padres' => 'nullable|in:casados,convivientes,separados,divorciados,viudos,otros',
+            'situacion_matrimonial_comentario' => 'nullable|string|max:255',
+            'tipo_sangre' => 'nullable|string|max:5',
+            'alergias' => 'nullable|string',
         ]);
 
         // Actualizar los datos principales

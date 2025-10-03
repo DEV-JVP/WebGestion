@@ -1,80 +1,100 @@
 <x-sidebar>
-    <div class="container my-5">
-        <div class="card shadow-lg border-0 rounded-3">
-            <div class="card-body p-4 p-md-5">
+    <div class="p-6">
+        <div class="">
 
-                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
-                    <h1 class="h3 fw-bold text-dark d-flex align-items-center">
-                        <i class="bi bi-people-fill fs-4 me-3 text-danger"></i>
-                        Guías
-                    </h1>
-                    <a href="{{ route('guias.create') }}" 
-                       class="btn btn-danger shadow-sm d-flex align-items-center">
-                        <i class="bi bi-plus-circle me-2"></i>
-                        Nueva Guía
-                    </a>
-                </div>
+            <!-- Header -->
+            <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4 bg-transparent max-w-6xl mx-auto w-full">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                    <i class="bi bi-people-fill text-blue-900 text-2xl"></i>
+                    Equipo de Guías
+                </h1>
+                <a href="{{ route('guias.create') }}"
+                   class="inline-flex items-center px-4 py-2 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Nuevo Guía
+                </a>
+            </div>
 
-                {{-- Mensaje de éxito --}}
-                @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
-                        <i class="bi bi-check-circle-fill me-2"></i>
-                        <div>{{ session('success') }}</div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <!-- Mensaje de éxito -->
+            @if(session('success'))
+                <div class="bg-green-100 border border-green-300 text-green-700 px-4 py-3 flex items-center justify-between text-sm max-w-6xl mx-auto mt-3 rounded-lg">
+                    <div class="flex items-center gap-2">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>{{ session('success') }}</span>
                     </div>
-                @endif
+                    <button type="button" onclick="this.parentElement.remove()">✕</button>
+                </div>
+            @endif
 
-                <div class="table-responsive rounded-3 shadow-sm">
-                    <table class="table table-hover table-striped align-middle text-start mb-0">
-                        <thead class="table-dark text-uppercase small">
-                            <tr>
-                                <th scope="col" class="px-3 py-2"><i class="bi bi-person-vcard me-1"></i> Nombre</th>
-                                <th scope="col" class="px-3 py-2"><i class="bi bi-phone me-1"></i> Teléfono</th>
-                                <th scope="col" class="px-3 py-2"><i class="bi bi-house me-1"></i> Comunidad Asignada</th>
-                                <th scope="col" class="px-3 py-2 text-center"><i class="bi bi-tools me-1"></i> Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($guias as $guia)
-                            <tr class="hover-bg-light">
-                                <td class="px-3 py-3 fw-bold">{{ $guia->nombre }}</td>
-                                <td class="px-3 py-3 text-muted">{{ $guia->telefono }}</td>
-                                <td class="px-3 py-3">
-                                    <span class="badge bg-primary">{{ $guia->comunidad->nombre }}</span>
+            <!-- Tabla -->
+            <div class="overflow-x-auto shadow rounded-lg border border-gray-200 max-w-6xl mx-auto mt-4">
+                <table class="w-full bg-white text-sm">
+                    <thead class="bg-gray-800 text-white uppercase text-xs tracking-wider">
+                        <tr>
+                            <th class="px-3 py-3 text-left"><i class="bi bi-person-vcard me-1"></i> Nombre</th>
+                            <th class="px-3 py-3 text-left"><i class="bi bi-phone me-1"></i> Teléfono</th>
+                            <th class="px-3 py-3 text-left"><i class="bi bi-house me-1"></i> Comunidad</th>
+                            <th class="px-3 py-3 text-left"><i class="bi bi-award me-1"></i> Cargo</th>
+                            <th class="px-3 py-3 text-center"><i class="bi bi-tools me-1"></i> Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-transparent">
+                        @forelse ($guias as $guia)
+                            <tr class="hover:bg-gray-100/40 transition">
+                                <!-- Nombre -->
+                                <td class="px-3 py-3 font-semibold text-gray-800">
+                                    {{ $guia->nombre }}
                                 </td>
-                                
+                                <!-- Teléfono -->
+                                <td class="px-3 py-3 text-gray-700">
+                                    {{ $guia->telefono }}
+                                </td>
+                                <!-- Comunidad -->
+                                <td class="px-3 py-3">
+                                    <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded">
+                                        {{ $guia->comunidad->nombre }}
+                                    </span>
+                                </td>
+                                <!-- Cargo -->
+                                <td class="px-3 py-3">
+                                    <span class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded">
+                                        {{ $guia->tipo_cargo }}
+                                    </span>
+                                </td>
+                                <!-- Acciones -->
                                 <td class="px-3 py-3 text-center">
-                                    <div class="btn-group" role="group">
-                                        <a href="{{ route('guias.edit', $guia) }}" 
-                                           class="btn btn-sm btn-warning text-dark" 
-                                           data-bs-toggle="tooltip" title="Editar Guía">
+                                    <div class="flex justify-center gap-1">
+                                        <a href="{{ route('guias.edit', $guia) }}"
+                                           class="px-2 py-1 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition text-xs"
+                                           title="Editar Guía">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <form action="{{ route('guias.destroy', $guia) }}" method="POST" 
-                                              onsubmit="return confirm('¿Estás seguro de que deseas eliminar al guía {{ $guia->nombre }}?');" 
-                                              class="d-inline">
+                                        <form action="{{ route('guias.destroy', $guia) }}" method="POST"
+                                              onsubmit="return confirm('¿Estás seguro de que deseas eliminar al guía {{ $guia->nombre }}?')"
+                                              class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Eliminar Guía">
+                                            <button type="submit"
+                                                    class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs"
+                                                    title="Eliminar Guía">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted py-4">
-                                    <i class="bi bi-exclamation-octagon d-block mb-2 fs-4"></i>
-                                    No hay guías registradas en el sistema.
+                                <td colspan="5" class="px-4 py-6 text-center text-gray-500">
+                                    <i class="bi bi-exclamation-octagon mb-2 block text-xl"></i>
+                                    No hay guías registrados en el sistema.
                                 </td>
                             </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
+
         </div>
     </div>
 </x-sidebar>
