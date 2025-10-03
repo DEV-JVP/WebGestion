@@ -69,53 +69,48 @@
                                 </span>
                             </td>
 
-                         <td class="px-6 py-3 text-center">
-    <div class="flex gap-2 justify-center">
-        <a href="{{ route('confirmandos.show', $confirmando) }}"
-           class="px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition text-xs"
-           title="Ver Detalles">
-            <i class="bi bi-eye"></i>
-        </a>
+                            <td class="px-6 py-3 text-center">
+                                <div class="flex gap-2 justify-center">
+                                    <a href="{{ route('confirmandos.show', $confirmando) }}"
+                                        class="px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition text-xs"
+                                        title="Ver Detalles">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{ route('confirmandos.edit', $confirmando) }}"
+                                        class="px-3 py-1 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-500 transition text-xs"
+                                        title="Editar Registro">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{{ route('pagos.index', $confirmando) }}"
+                                        class="px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition text-xs"
+                                        title="Gestionar Pagos">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </a>
 
-        <a href="{{ route('confirmandos.edit', $confirmando) }}"
-           class="px-3 py-1 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-500 transition text-xs"
-           title="Editar Registro">
-            <i class="bi bi-pencil"></i>
-        </a>
 
-        <a href="{{ route('pagos.index', $confirmando) }}"
-           class="px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition text-xs"
-           title="Gestionar Pagos">
-            <i class="bi bi-currency-dollar"></i>
-        </a>
+                                    <a href="{{ route('confirmandos.documentos.edit', [$confirmando->id, $confirmando->documentos->first()?->id ?? 0]) }}"
+   class="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition text-xs"
+   title="Gestionar Documentos">
+    <i class="bi bi-folder-check"></i>
+</a>
 
-        @php
-            $documento = $confirmando->documentos->first();
-        @endphp
 
-        @if($documento)
-            <a href="{{ route('confirmandos.documentos.edit', [$confirmando->id, $documento->id]) }}"
-               class="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition text-xs"
-               title="Gestionar Documentos">
-                <i class="bi bi-folder-check"></i>
-            </a>
-        @else
-            <span class="text-gray-400 text-xs">Sin documento</span>
-        @endif
 
-        <form action="{{ route('confirmandos.destroy', $confirmando) }}" method="POST"
-              onsubmit="return confirm('¿Seguro que deseas eliminar a {{ $confirmando->nombre }}? Esta acción es irreversible.');">
-            @csrf
-            @method('DELETE')
-            <button type="submit"
-                    class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition text-xs"
-                    title="Eliminar">
-                <i class="bi bi-trash"></i>
-            </button>
-        </form>
-    </div>
-</td>
 
+
+
+                                    <form action="{{ route('confirmandos.destroy', $confirmando) }}" method="POST"
+                                        onsubmit="return confirm('¿Seguro que deseas eliminar a {{ $confirmando->nombre }}? Esta acción es irreversible.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition text-xs"
+                                            title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         @empty
                         <tr>
